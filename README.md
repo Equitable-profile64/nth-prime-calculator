@@ -1,5 +1,7 @@
 # nth-prime-calculator
 
+> 🇫🇷 Documentation française : [README.FR.md](README.FR.md)
+
 A simple and educational Python command-line program for calculating the n-th prime number.
 
 The project is intentionally small so that the underlying algorithm, Python structure, command-line usage, Git workflow, and Termux integration remain easy to understand.
