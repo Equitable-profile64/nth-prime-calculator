@@ -58,6 +58,7 @@ Clone the project from GitHub:
 
 ```bash
 git clone git@github.com:valorisa/nth-prime-calculator.git
+```
 
 Enter the project directory:
 
