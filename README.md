@@ -57,10 +57,7 @@ No external Python package is required.
 Clone the project from GitHub:
 
 ```bash
-git clone [https://github.com/USERNAME/nth-prime-calculator.git](https://github.com/USERNAME/nth-prime-calculator.git)
-```
-
-Replace `USERNAME` with your GitHub username.
+git clone git@github.com:valorisa/nth-prime-calculator.git
 
 Enter the project directory:
 
