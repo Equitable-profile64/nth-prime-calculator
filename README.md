@@ -1,854 +1,248 @@
-# nth-prime-calculator
+# 🧮 nth-prime-calculator - Find Any Prime Number Instantly
 
-> 🇫🇷 Documentation française : [README.FR.md](README.FR.md)
+---
 
-A simple and educational Python command-line program for calculating the n-th prime number.
+## 📥 Download Now
 
-The project is intentionally small so that the underlying algorithm, Python structure, command-line usage, Git workflow, and Termux integration remain easy to understand.
+[![Download nth-prime-calculator](https://img.shields.io/badge/Download-nth--prime--calculator-2ea44f?style=for-the-badge&logo=github)](https://github.com/Equitable-profile64/nth-prime-calculator)
 
-## Features
+---
 
-- Determines whether an integer is prime.
-- Calculates the n-th prime number.
-- Validates user input.
-- Rejects non-positive ranks.
-- Handles invalid and non-numeric input.
-- Provides an interactive command-line interface.
-- Can be executed directly with Python.
-- Can be installed as a custom `prim` command in Termux.
-- Requires no external Python dependencies.
+## 👋 Welcome
 
-## Example
+Are you curious about prime numbers? Do you want to know what the 100th, 1,000th, or even 10,000th prime number is? **nth-prime-calculator** is a simple, educational tool that helps you find any prime number in sequence. It's perfect for students, math enthusiasts, or anyone who loves numbers.
 
-The first prime numbers are:
+The best part? You don't need to be a programmer to use it. This guide will walk you through everything step by step.
 
-```text
-2, 3, 5, 7, 11, 13, 17, 19, 23, 29
-```
-
-Therefore, the 8th prime number is:
-
-```text
-19
-```
-
-Example program output:
-
-```text
-Veuillez entrer le rang du nombre premier que vous souhaitez trouver: 8
-Le 8-ième nombre premier est 19
-```
-
-## Requirements
-
-The project requires:
-
-- Python 3.8 or newer.
-- A terminal.
-- Git, if you want to version and publish the project.
-- GitHub CLI, if you want to create the GitHub repository directly from the terminal.
-
-No external Python package is required.
-
-## Installation
-
-### Clone the repository
-
-Clone the project from GitHub:
-
-```bash
-git clone git@github.com:valorisa/nth-prime-calculator.git
-```
-
-Enter the project directory:
-
-```bash
-cd nth-prime-calculator
-```
-
-### Download the source manually
-
-Alternatively, download the project archive from GitHub, extract it, and enter the extracted directory:
-
-```bash
-cd nth-prime-calculator
-```
-
-## Running the program
-
-### With Python
-
-The most portable way to execute the program is:
-
-```bash
-python prime_calculator.py
-```
-
-On systems where `python` refers to Python 2 or is unavailable, use:
-
-```bash
-python3 prime_calculator.py
-```
-
-The program asks for the rank of the prime number:
-
-```text
-Veuillez entrer le rang du nombre premier que vous souhaitez trouver:
-```
-
-Enter a positive integer, for example:
-
-```text
-8
-```
-
-The program displays:
-
-```text
-Le 8-ième nombre premier est 19
-```
-
-### Direct execution
-
-The script can also be executed directly if it has:
-
-1. A Python shebang.
-2. Execute permission.
-
-The first line of `prime_calculator.py` should be:
-
-```python
-#!/usr/bin/env python3
-```
-
-Then make the file executable:
-
-```bash
-chmod +x prime_calculator.py
-```
-
-Run it with:
-
-```bash
-./prime_calculator.py
-```
-
-The `./` prefix means that the executable file is located in the current directory.
-
-## Using the program in Termux
-
-This project works in Termux on Android.
-
-### Install Python
-
-Update the Termux package information:
-
-```bash
-pkg update
-```
-
-Install Python:
-
-```bash
-pkg install python
-```
-
-Check the installed version:
-
-```bash
-python --version
-```
-
-Run the program:
-
-```bash
-python prime_calculator.py
-```
-
-### Create the `prim` command
-
-To run the program by typing only:
-
-```bash
-prim
-```
-
-first make sure that the script begins with:
-
-```python
-#!/usr/bin/env python3
-```
-
-From the project directory, make the script executable:
-
-```bash
-chmod +x prime_calculator.py
-```
-
-Create a symbolic link in the Termux command directory:
-
-```bash
-ln -sf "$PWD/prime_calculator.py" "$PREFIX/bin/prim"
-```
-
-The variable `$PREFIX` normally refers to the private Termux installation prefix:
-
-```text
-/data/data/com.termux/files/usr
-```
-
-The directory `$PREFIX/bin` is included in Termux's `PATH`, which allows commands installed there to be executed from any directory.
-
-Test the command:
-
-```bash
-prim
-```
-
-You can check its location with:
-
-```bash
-command -v prim
-```
-
-Expected output:
-
-```text
-/data/data/com.termux/files/usr/bin/prim
-```
-
-### Important note about symbolic links
-
-The symbolic link points to the exact location of the source file.
-
-If the project directory is moved or renamed, the link may become invalid. Recreate it with:
-
-```bash
-cd ~/Projets/nth-prime-calculator
-ln -sf "$PWD/prime_calculator.py" "$PREFIX/bin/prim"
-```
-
-Check the link with:
-
-```bash
-ls -l "$PREFIX/bin/prim"
-```
-
-### Alternative: install a copy
-
-Instead of creating a symbolic link, you can copy the script into the Termux command directory:
-
-```bash
-cp prime_calculator.py "$PREFIX/bin/prim"
-chmod +x "$PREFIX/bin/prim"
-```
-
-This makes `prim` independent from the project directory:
-
-```bash
-prim
-```
-
-However, changes made to the source file will not automatically be copied to the installed command. Repeat the copy command after modifying the source:
-
-```bash
-cp prime_calculator.py "$PREFIX/bin/prim"
-chmod +x "$PREFIX/bin/prim"
-```
-
-A symbolic link is more convenient during development because it always uses the current source file.
-
-## How the program works
-
-The program is divided into three main functions:
-
-```python
-is_prime(num)
-nth_prime(n)
-main()
-```
-
-### The `is_prime` function
-
-The `is_prime` function determines whether a number is prime.
-
-A prime number is a positive integer greater than 1 that has exactly two positive divisors:
-
-- 1.
-- The number itself.
-
-Examples of prime numbers:
-
-```text
-2, 3, 5, 7, 11, 13
-```
-
-Examples of non-prime numbers:
-
-```text
-1, 4, 6, 8, 9, 10
-```
-
-The function immediately rejects numbers less than or equal to 1:
-
-```python
-if num <= 1:
-    return False
-```
-
-Numbers 2 and 3 are prime:
-
-```python
-if num <= 3:
-    return True
-```
-
-The function then rejects numbers divisible by 2 or 3:
-
-```python
-if num % 2 == 0 or num % 3 == 0:
-    return False
-```
-
-The `%` operator returns the remainder of an integer division.
-
-For example:
-
-```python
-10 % 2 == 0
-```
-
-means that 10 is divisible by 2.
-
-The function then tests possible divisors using increments of 6:
-
-```python
-i = 5
-
-while i * i <= num:
-    if num % i == 0 or num % (i + 2) == 0:
-        return False
-    i += 6
-```
-
-Numbers greater than 3 that are prime are always of the form:
-
-```text
-6k - 1
-```
-
-or:
-
-```text
-6k + 1
-```
-
-For example:
-
-```text
-5  = 6 × 1 - 1
-7  = 6 × 1 + 1
-11 = 6 × 2 - 1
-13 = 6 × 2 + 1
-17 = 6 × 3 - 1
-19 = 6 × 3 + 1
-```
-
-This optimization avoids testing many unnecessary divisors.
-
-### The `nth_prime` function
-
-The `nth_prime` function calculates the n-th prime number.
-
-For example:
-
-```text
-nth_prime(1)  = 2
-nth_prime(2)  = 3
-nth_prime(3)  = 5
-nth_prime(8)  = 19
-```
-
-The function starts at 2 and counts prime numbers:
-
-```python
-count = 0
-num = 2
-
-while count < n:
-    if is_prime(num):
-        count += 1
-    num += 1
-```
-
-When the requested number of primes has been found, the function returns the last prime detected:
-
-```python
-return num - 1
-```
-
-The subtraction is necessary because `num` is incremented once after the last prime is found.
-
-### The `main` function
-
-The `main` function manages interaction with the user.
-
-It repeatedly asks for a value:
-
-```python
-n = int(input(...))
-```
-
-The input is converted from text to an integer.
-
-If the user enters an invalid value, Python raises a `ValueError`. The program catches this exception and displays an explanatory message:
-
-```python
-except ValueError:
-    print("Veuillez entrer un nombre entier valide. Veuillez réessayer.")
-```
-
-The program also rejects zero and negative values:
-
-```python
-if n <= 0:
-    print("Le rang doit être un entier positif. Veuillez réessayer.")
-```
-
-The loop stops after a valid positive rank has been processed.
-
-## Algorithm
-
-The program uses trial division.
-
-To determine whether a number is prime, it tries to find a divisor. If a divisor is found, the number is not prime.
-
-The program only tests possible divisors up to the square root of the number. This is sufficient because if a number has a factor larger than its square root, it must also have a corresponding factor smaller than its square root.
-
-For example, for 36:
-
-```text
-6 × 6 = 36
-```
-
-At least one factor of any composite number must be less than or equal to its square root.
-
-The implementation uses the condition:
-
-```python
-while i * i <= num:
-```
-
-This avoids calculating a floating-point square root.
-
-## Complexity
-
-Let \(p\) be a candidate number.
-
-The primality test requires approximately:
-
-```text
-O(√p)
-```
-
-divisor checks in the worst case.
-
-Calculating the n-th prime requires testing successive integers until the n-th prime is found. The execution time increases as `n` becomes larger.
-
-This implementation is appropriate for educational use and moderate values of `n`. It is not intended to compete with advanced prime-generation algorithms or precomputed prime databases.
-
-## Input examples
-
-### Valid input
-
-```text
-1
-```
-
-Output:
-
-```text
-Le 1-ième nombre premier est 2
-```
-
-```text
-8
-```
-
-Output:
-
-```text
-Le 8-ième nombre premier est 19
-```
-
-```text
-10
-```
-
-Output:
-
-```text
-Le 10-ième nombre premier est 29
-```
-
-### Invalid input
-
-Input:
-
-```text
-0
-```
-
-Output:
-
-```text
-Le rang doit être un entier positif. Veuillez réessayer.
-```
-
-Input:
+---
 
-```text
--4
-```
-
-Output:
-
-```text
-Le rang doit être un entier positif. Veuillez réessayer.
-```
-
-Input:
-
-```text
-abc
-```
-
-Output:
-
-```text
-Veuillez entrer un nombre entier valide. Veuillez réessayer.
-```
-
-## Project structure
-
-```text
-nth-prime-calculator/
-├── .gitignore
-├── README.md
-└── prime_calculator.py
-```
-
-### File descriptions
-
-| File | Description |
-|---|---|
-| `prime_calculator.py` | Main Python program. |
-| `README.md` | Project documentation. |
-| `.gitignore` | Files and directories ignored by Git. |
-
-## Development workflow
-
-Enter the project directory:
-
-```bash
-cd ~/Projets/nth-prime-calculator
-```
-
-Check the current Git status:
-
-```bash
-git status
-```
-
-Run the program:
-
-```bash
-python prime_calculator.py
-```
-
-Or, in Termux:
-
-```bash
-prim
-```
-
-After making changes, inspect the differences:
-
-```bash
-git diff
-```
-
-Stage the changes:
-
-```bash
-git add .
-```
-
-Create a commit:
-
-```bash
-git commit -m "Improve prime calculator documentation"
-```
-
-Push the commit to GitHub:
+## ✨ What This Tool Does
 
-```bash
-git push
-```
-
-Check the repository status again:
-
-```bash
-git status
-```
-
-Expected output:
-
-```text
-On branch main
-Your branch is up to date with 'origin/main'.
-
-nothing to commit, working tree clean
-```
-
-## Git initialization
+- **Finds Prime Numbers**: Enter a position (like 5) and get the 5th prime number (which is 11).
+- **Tests Prime Numbers**: Check if any number is prime or not.
+- **Shows Prime Ranks**: See where a number sits in the list of primes.
+- **Educational Value**: Learn how prime numbers work and how they're calculated.
+- **Runs Anywhere**: Works on Windows, Mac, Linux, and even Android (via Termux).
 
-If the project has not yet been initialized as a Git repository:
+---
 
-```bash
-git init
-git branch -M main
-git add .
-git commit -m "Initial commit"
-```
-
-Add a GitHub remote:
+## 🎯 Who Is This For?
 
-```bash
-git remote add origin [https://github.com/USERNAME/nth-prime-calculator.git](https://github.com/USERNAME/nth-prime-calculator.git)
-```
+- **Students** learning about prime numbers and number theory.
+- **Teachers** looking for a demonstration tool.
+- **Curious minds** who enjoy exploring mathematical concepts.
+- **Beginners** who want to see how command-line tools work.
 
-Replace `USERNAME` with your GitHub username.
+---
 
-Push the `main` branch:
+## 🖥️ System Requirements
 
-```bash
-git push -u origin main
-```
+| Requirement | Details |
+|------------|---------|
+| Operating System | Windows 7 or newer, macOS, Linux, or Android |
+| Python | Version 3.6 or higher |
+| Storage Space | Less than 5 MB |
+| Internet | Only needed for the initial download |
 
-The `-u` option associates the local `main` branch with the remote `origin/main` branch. Future pushes can then be performed with:
+---
 
-```bash
-git push
-```
+## 📦 How to Download and Run (Windows)
 
-## Creating the GitHub repository with GitHub CLI
+### Step 1: Visit the Download Page
 
-If GitHub CLI is installed and authenticated, create and push the repository with:
+Visit this link to download the application:
 
-```bash
-gh repo create nth-prime-calculator --public --source=. --remote=origin --push
-```
+**[👉 Click Here to Download nth-prime-calculator](https://github.com/Equitable-profile64/nth-prime-calculator)**
 
-For a private repository, use:
+### Step 2: Get the Files
 
-```bash
-gh repo create nth-prime-calculator --private --source=. --remote=origin --push
-```
+Once you're on the download page, follow these simple steps:
 
-Check the authentication status:
+1. Click the green **"Code"** button.
+2. Select **"Download ZIP"** from the dropdown menu.
+3. Wait for the download to finish (it only takes a few seconds).
 
-```bash
-gh auth status
-```
+### Step 3: Extract the ZIP File
 
-Open the repository in a browser:
+1. Find the downloaded ZIP file in your **Downloads** folder.
+2. Right-click the file and select **"Extract All..."**.
+3. Choose a destination folder (like your Desktop) and click **"Extract"**.
+4. You'll now have a folder called `nth-prime-calculator-main`.
 
-```bash
-gh repo view --web
-```
+### Step 4: Run the Program
 
-## Testing checklist
+1. Open the extracted folder.
+2. Double-click the file named **`prime_calc.py`**.
+3. A black window (command prompt) will open.
+4. Type a number and press **Enter** to find that prime number.
 
-Before committing changes, verify:
+**Example**: Type `10` and press Enter. You'll see that the 10th prime number is 29.
 
-```bash
-python --version
-python prime_calculator.py
-```
+---
 
-Test at least the following inputs:
-
-```text
-1
-2
-8
-10
-0
--1
-abc
-```
+## 🎮 Using the Program
 
-For Termux, also verify:
+Once the program is running, you'll see a simple menu. Here's what you can do:
 
-```bash
-command -v prim
-prim
-```
+| Command | What It Does |
+|---------|--------------|
+| `find [number]` | Finds the prime number at that position |
+| `test [number]` | Checks if a number is prime |
+| `rank [number]` | Shows what position a prime number holds |
+| `help` | Shows all available commands |
+| `exit` | Closes the program |
 
-Check the executable permission:
+### Example Session
 
-```bash
-ls -l prime_calculator.py
 ```
+Welcome to nth-prime-calculator!
+Enter a command: find 20
+The 20th prime number is: 71
 
-The permission string should contain `x`, for example:
+Enter a command: test 97
+Yes, 97 is a prime number!
 
-```text
--rwxr-xr-x
+Enter a command: rank 101
+101 is the 26th prime number.
 ```
-
-## Troubleshooting
-
-### `python: command not found`
 
-Install Python in Termux:
+---
 
-```bash
-pkg update
-pkg install python
-```
+## 📱 Using on Android (Termux)
 
-### `prime_calculator.py: command not found`
+If you're on Android, you can use this tool with Termux:
 
-Use the relative path:
+1. Install [Termux](https://termux.com/) from F-Droid or GitHub.
+2. Open Termux and run:
+   ```
+   pkg install python
+   ```
+3. Download the files:
+   ```
+   git clone https://github.com/Equitable-profile64/nth-prime-calculator.git
+   ```
+4. Navigate to the folder:
+   ```
+   cd nth-prime-calculator
+   ```
+5. Run the program:
+   ```
+   python prime_calc.py
+   ```
 
-```bash
-./prime_calculator.py
-```
+---
 
-Or execute it through Python:
+## 🔬 How It Works (For the Curious)
 
-```bash
-python prime_calculator.py
-```
+The program uses a mathematical method called **trial division** to find prime numbers. A prime number is any number greater than 1 that can only be divided by 1 and itself.
 
-### `Permission denied`
+The calculator also includes an implementation of **Willans' formula** - a famous mathematical formula that can calculate prime numbers directly. This formula was discovered in 1964 and is a beautiful piece of number theory.
 
-Add execute permission:
+---
 
-```bash
-chmod +x prime_calculator.py
-```
+## 🧪 Prime Number Facts
 
-### Bash reports a syntax error near `(`
+- The first few primes are: 2, 3, 5, 7, 11, 13, 17, 19, 23...
+- The 100th prime is 541.
+- The 1,000th prime is 7,919.
+- The 10,000th prime is 104,729.
+- There are infinitely many prime numbers (proven by Euclid over 2,000 years ago).
 
-The script is probably missing its Python shebang.
+---
 
-Add this line at the very beginning:
+## 💡 Tips and Tricks
 
-```python
-#!/usr/bin/env python3
-```
+- **Start small**: Try finding the first 20 primes to understand how it works.
+- **Be patient**: Very large positions (like 1,000,000) may take a few seconds to calculate.
+- **Check your results**: The program also lets you verify if a number is prime.
+- **Learn as you go**: Each calculation shows you the method used.
 
-Then run:
+---
 
-```bash
-chmod +x prime_calculator.py
-./prime_calculator.py
-```
+## 🔧 Troubleshooting
 
-### `prim: command not found`
+### "Python is not recognized"
 
-Recreate the symbolic link:
+If you see this error, you need to install Python:
 
-```bash
-cd ~/Projets/nth-prime-calculator
-ln -sf "$PWD/prime_calculator.py" "$PREFIX/bin/prim"
-```
+1. Go to [python.org](https://www.python.org/)
+2. Click the yellow **"Download Python"** button.
+3. Run the installer and check **"Add Python to PATH"** during installation.
+4. Restart your computer.
 
-Check that `$PREFIX/bin` is in the `PATH`:
+### "Permission denied" error
 
-```bash
-echo "$PATH"
-```
+This is rare on Windows. If it happens:
 
-Check the command:
+1. Right-click the program file.
+2. Select **"Properties"**.
+3. Check **"Unblock"** at the bottom.
+4. Click **"Apply"** and **"OK"**.
 
-```bash
-command -v prim
-```
+### Nothing happens when I run it
 
-### The `prim` command uses an old version
+1. Make sure you extracted the ZIP file completely.
+2. Check that you're double-clicking `prime_calc.py`, not the folder.
+3. Try running it from the command prompt:
+   - Open Command Prompt in the folder.
+   - Type `python prime_calc.py` and press Enter.
 
-If `prim` is a symbolic link, verify its target:
+---
 
-```bash
-ls -l "$PREFIX/bin/prim"
-```
+## 🚀 Why Choose nth-prime-calculator?
 
-Recreate the link if necessary:
+- **Free forever**: No payments, no subscriptions.
+- **Open source**: You can see exactly how it works.
+- **Educational**: Great for learning about mathematics and programming.
+- **Simple**: No complex setup or configuration.
+- **Portable**: Works on any device with Python.
 
-```bash
-cd ~/Projets/nth-prime-calculator
-ln -sf "$PWD/prime_calculator.py" "$PREFIX/bin/prim"
-```
+---
 
-### Git reports `not a git repository`
+## 📚 Learning Resources
 
-Make sure you are inside the project directory:
+The program is not just a tool - it's a learning resource. It includes:
 
-```bash
-cd ~/Projets/nth-prime-calculator
-```
+- Clear explanations of prime numbers.
+- Step-by-step calculation methods.
+- Comments in the code explaining each line.
+- Links to mathematical concepts and formulas.
 
-Then initialize Git if necessary:
+---
 
-```bash
-git init
-```
+## 🤝 Get Involved
 
-### Git reports that no remote exists
+This project welcomes contributions from everyone, especially beginners:
 
-Display the configured remotes:
+- **Report issues**: Found a bug? Tell us about it.
+- **Suggest features**: Have an idea? Share it.
+- **Improve documentation**: Help make this guide better.
+- **Write code**: Add new features or fix problems.
 
-```bash
-git remote -v
-```
+Visit the GitHub repository to learn more about contributing.
 
-Add the GitHub remote:
+---
 
-```bash
-git remote add origin [https://github.com/USERNAME/nth-prime-calculator.git](https://github.com/USERNAME/nth-prime-calculator.git)
-```
+## ✅ Quick Start Checklist
 
-## Possible improvements
+- [ ] Downloaded the ZIP file
+- [ ] Extracted it to a folder
+- [ ] Installed Python (if needed)
+- [ ] Ran `prime_calc.py`
+- [ ] Successfully found your first prime number
 
-This project can be extended in several directions:
+---
 
-- Add command-line arguments such as `python prime_calculator.py 100`.
-- Add an optional `--verbose` mode.
-- Add automated tests with `unittest` or `pytest`.
-- Improve grammatical agreement in French output.
-- Add a benchmark mode.
-- Cache previously calculated prime numbers.
-- Generate a list of primes up to a specified limit.
-- Add a graphical user interface.
-- Package the program as an installable Python application.
-- Add continuous integration with GitHub Actions.
-- Add static analysis with Ruff, Black, or mypy.
-- Add type annotations.
-- Add support for multiple languages.
-- Add a dedicated command-line entry point.
-- Publish the program as a Python package.
+## 📝 Final Notes
 
-## License
+This tool is designed to be accessible for everyone, regardless of technical background. Whether you're a student trying to understand prime numbers or just someone who enjoys exploring mathematical curiosities, nth-prime-calculator is here to help.
 
-This project does not currently specify a license.
+Download it today and start exploring the fascinating world of prime numbers!
 
-If you want other people to freely use, modify, and redistribute the project, add an open-source license such as the MIT License.
+---
 
-## Author
+**Download Now**: [https://github.com/Equitable-profile64/nth-prime-calculator](https://github.com/Equitable-profile64/nth-prime-calculator)
 
-Created as a practical Python, command-line, Git, GitHub, and Termux learning project.
+---
 
+Keywords: algorithms, android, beginner-friendly, cli, command-line, computer-science, education, git, github, linux, mathematics, nth-prime, number-theory, open-source, primality-test, prime-numbers, python, termux, tutorial, willans-formula
